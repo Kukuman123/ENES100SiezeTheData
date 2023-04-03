@@ -43,10 +43,10 @@ void Robot::tankSetup(){
 
     isTank = true;
 
-    tankForwardConstant = 2500;
-    tankBackwardConstant = 2500;
-    tankLeftConstant = 2500;
-    tankRightConstant = 2500;
+    tankForwardConstant = 9259;
+    tankBackwardConstant = 9259;
+    tankLeftConstant = 29;
+    tankRightConstant = 29;
 
     pinMode(TANK_MOTOR_1_FORWARD, OUTPUT);
     pinMode(TANK_MOTOR_1_REVERSE, OUTPUT);
