@@ -4,14 +4,16 @@
 #include <Arduino.h>
 
 
-class Robot {
+class UltraSensor{
 
     public:
-        int trigPin;
-        int echoPin;
+        int trig;
+        int echo;
+        double distanceInfo;
 
         UltraSensor(int trigPin, int echoPin);
         bool isObjectBlocking(double distanceToCheck);
+        String sendInfo();
 
 };
 
