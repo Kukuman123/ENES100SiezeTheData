@@ -1,17 +1,16 @@
 #include "UltraSensor.h"
 
-UltraSensor::UltraSensor(int trigPin, int echoPin, double distance){
+UltraSensor::UltraSensor(int trigPin, int echoPin){
     this.trigPin = trigPin;
     this.echoPin = echoPin;
-    this.distanceToCheck = distance;
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT)
 };
-
-bool UltraSensor::isObjectBlocking(){
+//meters
+bool UltraSensor::isObjectBlocking(double distanceToCheck){
     //Clear trigPin
     digitalWrite(this.trigPin, LOW);
-    delayMicroseconds(2);
+    delayMicroseconds(5);
     // Sets the trigPin on HIGH state for 10 micro seconds
     digitalWrite(this.trigPin, HIGH);
     delayMicroseconds(10);
@@ -19,12 +18,12 @@ bool UltraSensor::isObjectBlocking(){
     // Reads the echoPin, returns the sound wave travel time in microseconds
     long duration = pulseIn(this.echoPin, HIGH);
     // Calculating the distance
-    double distance = duration * 0.034 / 2;
+    double distance = ((duration/2)/74)/100;
     // Prints the distance on the Serial Monitor
-    if(distance > this.distanceToCheck){
+    if(distance > distanceToCheck){
         return false;
     }
     else{
-        return false;
+        return true;
     }
 };

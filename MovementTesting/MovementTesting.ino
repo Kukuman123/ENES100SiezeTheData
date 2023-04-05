@@ -5,7 +5,12 @@
 
 Robot tankTesting;
 Robot robotTesting; //8, 7, 9, 5, 4, 3
-UltraSensor objectDetection(18, 19, 0.03)
+UltraSensor objectDetection(18, 19)
+
+
+int lengthFromCenter = 0.1;//meters
+bool cheatTheSystem = false;
+int topMiddleBottom = 0;
 
 
 
@@ -27,16 +32,34 @@ void setup() {
     double initialY = Enes100.location.y;
     double initialAng = Enes100.location.theta;
 
-    bool topLocationTrue = true;
+    bool topLocationTrue = false;
+    topMiddleBottom = 1;
     if((intialY - 0.55) < (1.45 - initialY)){
-        topLocationTrue = false;
+        topLocationTrue = true;
+        topMiddleBottom = 3;
     }
 
     double rotateAngle = intialAng * (180/M_PI);
     tankTesting.spin(rotateAngle, 0.8);
 
-    tankTesting.moveLinear(0.92, 0.8);
-    if()
+    if(cheatTheSystem){
+
+    }
+    else{
+        if(topLocationTrue){
+            moveLinears(0.84-lengthFromCenter);
+            if(objectDetection.isObjectBlocking(0.03)){
+
+            }
+            
+
+            
+        }
+        else{
+
+        }
+    }
+
 
 
 

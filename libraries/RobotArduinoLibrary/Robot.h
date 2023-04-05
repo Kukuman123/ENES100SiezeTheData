@@ -16,15 +16,8 @@
 #define TANK_MOTOR_4_FORWARD 2 //RB
 #define TANK_MOTOR_4_REVERSE 3 //RB
 
-#define ROBOT_FORWARD_CONSTANT 1
-#define ROBOT_REVERSE_CONSTANT 1
-#define ROBOT_LEFT_CONSTANT 1
-#define ROBOT_RIGHT_CONSTANT 1
 
-#define TANK_FORWARD_CONSTANT 5000
-#define TANK_REVERSE_CONSTANT 5000
-#define TANK_LEFT_CONSTANT 5000
-#define TANK_RIGHT_CONSTANT 5000
+
 
 
 
@@ -59,6 +52,7 @@ class Robot {
         //power is from -1 to 1, will convert to -255 to 255
         //degrees start at 0 at vertical on robot, left is negative, right is positive
         //on robot: back (-) to front (+) of robot is y axis
+        void move(double power);
         void setPins2Motor(int leftF, int leftR, int leftA, int rightF, int rightR, int rightA);
         void tankSetup();
         void turnOffMotors();

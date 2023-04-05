@@ -9,10 +9,9 @@ class Robot {
     public:
         int trigPin;
         int echoPin;
-        int distanceToCheck;
 
-        UltraSensor(int trigPin, int echoPin, double distance);
-        bool isObjectBlocking();
+        UltraSensor(int trigPin, int echoPin);
+        bool isObjectBlocking(double distanceToCheck);
 
 };
 
