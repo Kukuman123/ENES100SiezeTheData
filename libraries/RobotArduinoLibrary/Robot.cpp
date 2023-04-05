@@ -127,6 +127,57 @@ void Robot::move(double power){
     }
 }
 
+void Robot::spinTill(double power){
+    if(isTank){
+        if(power > 0){
+            analogWrite(leftFrontMotorForwardPin, abs((int)(power * 255)));
+            digitalWrite(leftFrontMotorReversePin, 0);
+
+            analogWrite(leftBackMotorForwardPin, abs((int)(power * 255)));
+            digitalWrite(leftBackMotorReversePin, 0);
+
+            analogWrite(rightFrontMotorReversePin, abs((int)(power * 255)));
+            digitalWrite(rightFrontMotorForwardPin, 0);
+
+            analogWrite(rightBackMotorReversePin, abs((int)(power * 255)));
+            digitalWrite(rightBackMotorForwardPin, 0);
+        }
+        else{
+            analogWrite(leftFrontMotorReversePin, abs((int)(power * 255)));
+            digitalWrite(leftFrontMotorForwardPin, 0);
+
+            analogWrite(leftBackMotorReversePin, abs((int)(power * 255)));
+            digitalWrite(leftBackMotorForwardPin, 0);
+
+            analogWrite(rightFrontMotorForwardPin, abs((int)(power * 255)));
+            digitalWrite(rightFrontMotorReversePin, 0);
+
+            analogWrite(rightBackMotorForwardPin, abs((int)(power * 255)));
+            digitalWrite(rightBackMotorReversePin, 0);
+        }
+    }
+    else{
+        if(power > 0){
+            digitalWrite(leftFrontMotorForwardPin, HIGH);
+            digitalWrite(leftFrontMotorReversePin, LOW);
+            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+
+            digitalWrite(rightFrontMotorForwardPin, LOW);
+            digitalWrite(rightFrontMotorReversePin, HIGH);
+            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+        }
+        else{
+            digitalWrite(leftFrontMotorForwardPin, LOW);
+            digitalWrite(leftFrontMotorReversePin, HIGH);
+            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+
+            digitalWrite(rightFrontMotorForwardPin, HIGH);
+            digitalWrite(rightFrontMotorReversePin, LOW);
+            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+        }
+    }
+}
+
 void Robot::moveLinear(double distance, double power){
     if(isTank){
         if(power > 0){

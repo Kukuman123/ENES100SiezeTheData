@@ -53,6 +53,8 @@ class Robot {
         //degrees start at 0 at vertical on robot, left is negative, right is positive
         //on robot: back (-) to front (+) of robot is y axis
         void move(double power);
+        //right is +, left is -
+        void spinTill(double power);
         void setPins2Motor(int leftF, int leftR, int leftA, int rightF, int rightR, int rightA);
         void tankSetup();
         void turnOffMotors();
