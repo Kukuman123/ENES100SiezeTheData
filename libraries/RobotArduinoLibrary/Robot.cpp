@@ -76,8 +76,8 @@ void Robot::turnOffMotors(){
     else{
         digitalWrite(leftFrontMotorForwardPin, LOW);
         digitalWrite(leftFrontMotorReversePin, LOW);
-        digitalWrite(leftFrontMotorForwardPin, LOW);
-        digitalWrite(leftFrontMotorReversePin, LOW);
+        digitalWrite(rightFrontMotorForwardPin, LOW);
+        digitalWrite(rightFrontMotorReversePin, LOW);
 
     }
 }
@@ -248,6 +248,7 @@ void Robot::spin(double degrees, double power){
             digitalWrite(rightBackMotorForwardPin, 0);
 
             delay((int)(degrees * tankRightConstant));
+            Robot::turnOffMotors();
         }
         else{
             analogWrite(leftFrontMotorReversePin, abs((int)(power * 255)));
@@ -263,6 +264,7 @@ void Robot::spin(double degrees, double power){
             digitalWrite(rightBackMotorReversePin, 0);
 
             delay((int)(degrees * tankLeftConstant));
+            Robot::turnOffMotors();
         }
     }
     else{
@@ -276,6 +278,7 @@ void Robot::spin(double degrees, double power){
             analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
 
             delay((int)(degrees * robotRightConstant));
+            Robot::turnOffMotors();
         }
         else{
             digitalWrite(leftFrontMotorForwardPin, LOW);
@@ -287,7 +290,7 @@ void Robot::spin(double degrees, double power){
             analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
 
             delay((int)(degrees * robotLeftConstant));
+            Robot::turnOffMotors();
         }
     }
-    Robot::turnOffMotors();
 }
