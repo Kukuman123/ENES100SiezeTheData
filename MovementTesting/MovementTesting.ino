@@ -13,9 +13,9 @@ UltraSensor objectDetection(18, 19);
 
 
 void setup() {
-  int lengthFromCenter = 0.12;
-  bool cheatTheSystem = false;
-  int topMiddleBottom = 0.1;
+    int lengthFromCenter = 0.12;
+    bool cheatTheSystem = false;
+    int topMiddleBottom = 0.1;
     tankTesting.tankSetup();
     //robotTesting.setPins2Motor(8, 7, 9, 5, 4, 3);
 
@@ -66,6 +66,7 @@ void setup() {
     }
     else{
         if(topLocationTrue){
+            //
             tankTesting.moveLinear(0.84-lengthFromCenter, 0.8);
             delay(500);
             while(objectDetection.isObjectBlocking(0.03)){
