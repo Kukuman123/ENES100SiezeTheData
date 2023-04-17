@@ -1,0 +1,28 @@
+
+int hallSensorPin = 12;
+int hallsensorValue = 0;
+
+
+
+void setup() {
+Serial.begin(9600);
+pinMode(hallSensorPin,INPUT);
+}
+
+void loop() {
+
+hallsensorValue = digitalRead(hallSensorPin);
+//Serial.print("hallSensorPin:  ");
+//Serial.println(hallsensorValue);
+
+if (hallsensorValue == 1) {
+Serial.println("Magnet not Detected");
+}
+else{
+Serial.println("Magnet detected");
+}
+
+
+
+
+}
