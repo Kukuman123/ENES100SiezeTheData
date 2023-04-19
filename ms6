@@ -1,0 +1,46 @@
+
+int hallSensorPin = 12;
+int hallsensorValue = 0;
+int pos = 0; 
+
+void setup() {
+Serial.begin(9600);
+pinMode(hallSensorPin,INPUT);
+myservo.attach(9);
+
+}
+
+void loop() {
+
+hallsensorValue = digitalRead(hallSensorPin);
+//Serial.print("hallSensorPin:  ");
+//Serial.println(hallsensorValue);
+
+ for (pos = 0; pos <= 360; pos += 1) { // goes from 0 degrees to 360 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15 ms for the servo to reach the position
+  }
+  for (pos = 360; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);             
+
+  if (hallsensorValue == 1) {
+  Serial.println("Magnet not Detected");
+}
+  else{
+  Serial.println("Magnet detected");
+}
+  }
+
+for (pos = 0; pos <= 360; pos += 1) { // goes from 0 degrees to 360 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15 ms for the servo to reach the position
+  }
+  for (pos = 360; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);     
+
+}
+}
