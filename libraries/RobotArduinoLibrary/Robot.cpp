@@ -17,17 +17,19 @@ void Robot::setPins2Motor(int leftF, int leftR, int leftA, int rightF, int right
     rightMotorAnalogPin = rightA;
     leftMotorAnalogPin = leftA;
 
-    robotBackwardConstant = 1;
-    robotForwardConstant = 1;
-    robotLeftConstant = 1;
-    robotRightConstant = 1;
+    robotBackwardConstant = 5000;
+    robotForwardConstant = 5000;
+    robotLeftConstant = 25;
+    robotRightConstant = 25;
 
-    pinMode(leftF, OUTPUT);
-    pinMode(leftR, OUTPUT);
-    pinMode(rightF, OUTPUT);
-    pinMode(rightR, OUTPUT);
-    pinMode(rightA, OUTPUT);
-    pinMode(leftA, OUTPUT);
+    isTank = false;
+
+    pinMode(leftFrontMotorForwardPin, OUTPUT);
+    pinMode(leftFrontMotorReversePin, OUTPUT);
+    pinMode(rightFrontMotorForwardPin, OUTPUT);
+    pinMode(rightFrontMotorReversePin, OUTPUT);
+    pinMode(leftMotorAnalogPin, OUTPUT);
+    pinMode(rightMotorAnalogPin, OUTPUT);
 }
 
 void Robot::tankSetup(){
@@ -76,107 +78,15 @@ void Robot::turnOffMotors(){
     else{
         digitalWrite(leftFrontMotorForwardPin, LOW);
         digitalWrite(leftFrontMotorReversePin, LOW);
+        analogWrite(leftMotorAnalogPin, 0);
         digitalWrite(rightFrontMotorForwardPin, LOW);
         digitalWrite(rightFrontMotorReversePin, LOW);
+        analogWrite(rightMotorAnalogPin, 0);
 
     }
 }
 
-void Robot::move(double power){
-    if(isTank){
-        if(power > 0){
-            analogWrite(leftFrontMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(leftFrontMotorReversePin, 0);
-            analogWrite(leftBackMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(leftBackMotorReversePin, 0);
-            analogWrite(rightFrontMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(rightFrontMotorReversePin, 0);
-            analogWrite(rightBackMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(rightBackMotorReversePin, 0);
-        }
-        else{
-            analogWrite(leftFrontMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(leftFrontMotorForwardPin, 0);
-            analogWrite(leftBackMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(leftBackMotorForwardPin, 0);
-            analogWrite(rightFrontMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(rightFrontMotorForwardPin, 0);
-            analogWrite(rightBackMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(rightBackMotorForwardPin, 0);
-        }
-    }
-    else{
-        if(power > 0){
-            digitalWrite(leftFrontMotorForwardPin, HIGH);
-            digitalWrite(leftFrontMotorReversePin, LOW);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
 
-            digitalWrite(rightFrontMotorForwardPin, HIGH);
-            digitalWrite(rightFrontMotorReversePin, LOW);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-        }
-        else{
-            digitalWrite(leftFrontMotorForwardPin, LOW);
-            digitalWrite(leftFrontMotorReversePin, HIGH);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-
-            digitalWrite(rightFrontMotorForwardPin, LOW);
-            digitalWrite(rightFrontMotorReversePin, HIGH);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-        }
-    }
-}
-
-void Robot::spinTill(double power){
-    if(isTank){
-        if(power > 0){
-            analogWrite(leftFrontMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(leftFrontMotorReversePin, 0);
-
-            analogWrite(leftBackMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(leftBackMotorReversePin, 0);
-
-            analogWrite(rightFrontMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(rightFrontMotorForwardPin, 0);
-
-            analogWrite(rightBackMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(rightBackMotorForwardPin, 0);
-        }
-        else{
-            analogWrite(leftFrontMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(leftFrontMotorForwardPin, 0);
-
-            analogWrite(leftBackMotorReversePin, abs((int)(power * 255)));
-            digitalWrite(leftBackMotorForwardPin, 0);
-
-            analogWrite(rightFrontMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(rightFrontMotorReversePin, 0);
-
-            analogWrite(rightBackMotorForwardPin, abs((int)(power * 255)));
-            digitalWrite(rightBackMotorReversePin, 0);
-        }
-    }
-    else{
-        if(power > 0){
-            digitalWrite(leftFrontMotorForwardPin, HIGH);
-            digitalWrite(leftFrontMotorReversePin, LOW);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-
-            digitalWrite(rightFrontMotorForwardPin, LOW);
-            digitalWrite(rightFrontMotorReversePin, HIGH);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-        }
-        else{
-            digitalWrite(leftFrontMotorForwardPin, LOW);
-            digitalWrite(leftFrontMotorReversePin, HIGH);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-
-            digitalWrite(rightFrontMotorForwardPin, HIGH);
-            digitalWrite(rightFrontMotorReversePin, LOW);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
-        }
-    }
-}
 
 void Robot::moveLinear(double distance, double power){
     if(isTank){
@@ -213,9 +123,9 @@ void Robot::moveLinear(double distance, double power){
 
             digitalWrite(rightFrontMotorForwardPin, HIGH);
             digitalWrite(rightFrontMotorReversePin, LOW);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+            analogWrite(rightMotorAnalogPin, abs((int)(power * 255)));
 
-            delay((int)(distance * robotForwardConstant * (1/power)));
+            delay((int)(distance * robotForwardConstant));
         }
         else{
             digitalWrite(leftFrontMotorForwardPin, LOW);
@@ -224,9 +134,9 @@ void Robot::moveLinear(double distance, double power){
 
             digitalWrite(rightFrontMotorForwardPin, LOW);
             digitalWrite(rightFrontMotorReversePin, HIGH);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+            analogWrite(rightMotorAnalogPin, abs((int)(power * 255)));
 
-            delay((int)(distance * robotBackwardConstant * (1/power)));
+            delay((int)(distance * robotBackwardConstant));
         }
     }
     Robot::turnOffMotors();
@@ -275,7 +185,7 @@ void Robot::spin(double degrees, double power){
 
             digitalWrite(rightFrontMotorForwardPin, LOW);
             digitalWrite(rightFrontMotorReversePin, HIGH);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+            analogWrite(rightMotorAnalogPin, abs((int)(power * 255)));
 
             delay(abs((int)(degrees * robotRightConstant)));
             Robot::turnOffMotors();
@@ -287,7 +197,7 @@ void Robot::spin(double degrees, double power){
 
             digitalWrite(rightFrontMotorForwardPin, HIGH);
             digitalWrite(rightFrontMotorReversePin, LOW);
-            analogWrite(leftMotorAnalogPin, abs((int)(power * 255)));
+            analogWrite(rightMotorAnalogPin, abs((int)(power * 255)));
 
             delay(abs((int)(degrees * robotLeftConstant)));
             Robot::turnOffMotors();
